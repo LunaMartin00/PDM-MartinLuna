@@ -19,7 +19,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             TryTheme() {
                 val navController = rememberNavController()
-                val viewModel: GeneralViewModel = viewModel()
+                val viewModel: GeneralViewModel = viewModel(
+                    factory = GeneralViewModel.Factory(
+                        (application as TaskApplication).database.taskDao()
+                    )
+                )
 
                 NavHost(navController = navController, startDestination = "task_screen") {
                     composable("task_screen") {
